@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  client:
+    depends_on:
+      - api
+    image: allamasln/tbs-client-prod:${TAG}
+    stdin_open: true
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - mern-app
+    environment:
+      REACT_APP_API_URL: https://tbstore.allamas.com/api
+    restart: unless-stopped
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+  api:
+    image: allamasln/tbs-api:${TAG}
+    ports:
+      - 3001:3001
+    networks:
+      - mern-app
+    environment:
+      MONGO_URI: ${MONGO_URI}
+    restart: unless-stopped
+
+networks:
+  mern-app:
+    driver: bridge
+
+volumes:
+  tbs-mongo:
+    driver: local
+
+  caddy_data:
+    external: true
+  caddy_config:
+    driver: local

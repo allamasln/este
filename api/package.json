@@ -1,0 +1,36 @@
+{
+  "name": "tbstore_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:up": "migrate-mongo up",
+    "dev": "nodemon --ignore './tests' index.js",
+    "test": "jest --watchAll --colors",
+    "start": "node index.js",
+    "eslint": "eslint './**/*.{js,jsx}'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "mongoose": "^6.3.5",
+    "winston": "^3.7.2",
+    "winston-mongodb": "^5.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "jest": "^28.1.1",
+    "migrate-mongo": "^9.0.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "supertest": "^6.2.3"
+  },
+  "proxy": "http://localhost:3000"
+}

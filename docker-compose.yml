@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  client:
+    depends_on:
+      - api
+    build: ./client
+    image: tbs-client-dev:latest
+    stdin_open: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - mern-app
+  api:
+    depends_on:
+      - db
+    build: ./api
+    image: tbs-api:latest
+    ports:
+      - 3001:3001
+    environment:
+      MONGO_URI: mongodb://db/tbstore
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    command: ./docker-entrypoint.sh
+    networks:
+      - mern-app
+
+  db:
+    image: mongo:5.0.7-focal
+    ports:
+      - 27017:27017
+    volumes:
+      - tbs-mongo:/data/db
+    networks:
+      - mern-app
+volumes:
+  tbs-mongo:
+    driver: local
+
+networks:
+  mern-app:
+    driver: bridge
